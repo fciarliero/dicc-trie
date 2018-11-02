@@ -43,7 +43,7 @@ public:
     * Sirve para identificar si una clave está definida o no.
     **/
 
-    int count(const string &key) const;
+    int count(const string &clave) const;
 
     /**
     AT
@@ -52,8 +52,8 @@ public:
     --PRODUCE ALIASING--
     -- Versión modificable y no modificable
     **/
-    const T& at(const string& key) const;
-    T& at(const string& key);
+    const T& at(const string&clave) const;
+    T& at(const string& clave);
 
     /**
     ERASE
@@ -61,7 +61,7 @@ public:
     * PRE: La clave está definida.
     --PRODUCE ALIASING--
     **/
-    void erase(const string& key);
+    void erase(const string& clave);
 
     /**
      SIZE
@@ -76,13 +76,25 @@ public:
 private:
 
     struct Nodo {
+        Nodo() : siguientes(256, nullptr), definicion(nullptr) {}
         vector<Nodo*> siguientes;
         T* definicion;
     };
 
-    Nodo* raiz;
+    Nodo* _raiz;
     int _size;
-};
+     //busca recursivamente la clave "key" en "r"
+    Nodo* reBusq(Nodo*res, string key);
+    //busca recursivamente la clave "key" en "r"
+    Nodo* reBusq(Nodo* r, string key)const;
+    //borra recursivamente todos los nodos siguientes de desde
+    void reErase(Nodo* desde);
+    //reCopia: copia recursivamente todos los nodos de raiz a nuevos nodos,
+    // devuelve un puntero a la nueva raiz
+    Nodo* reCopia(Nodo* raiz);
+    //devuelve un int con el numero de nodos siguientes a nod
+    int numHijos(Nodo* nod);
+    };
 
 #include "string_map.hpp"
 
